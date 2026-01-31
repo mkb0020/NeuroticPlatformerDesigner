@@ -446,19 +446,19 @@ html::-webkit-scrollbar-thumb:hover {
 
 <div class="card">
   <h2>PHYSICS</h2>
-  <label>GRAVITY: <input id="gravity" type="number" value="1500"></label>
-  <label>JUMP FORCE / UPWARDS VELOCITY:<input id="jumpPower" type="number" value="12"></label>
-  <label>JUMP FORCE MULTIPLIER: <input id="jumpMult" type="number" value="65"></label>
-  <label>BASE SPEED:<input id="baseSpeed" type="number" value="10"></label>
-  <label>SPEED MULTIPLIER:<input id="speedMult" type="number" value="50"></label>
+  <label>GRAVITY: <input id="gravity" type="number" value="1000"></label>
+  <label>JUMP FORCE / UPWARDS VELOCITY:<input id="jumpPower" type="number" value="100"></label>
+  <label>JUMP FORCE MULTIPLIER: <input id="jumpMult" type="number" value="1"></label>
+  <label>BASE SPEED:<input id="baseSpeed" type="number" value="100"></label>
+  <label>SPEED MULTIPLIER:<input id="speedMult" type="number" value="1"></label>
 </div>
 
 
 <div class="card">
   <h2>LEVEL SETUP</h2>
-    <label>NUMBER OF LEVELS: <input id="levels" type="number" value="5"></label>
-    <label>INCREMENTAL PLATFORM DISTANCE: <input id="distanceDelta" type="number" value="10"></label> <!-- INCREMENTAL DISTANCE FOR PROGRESSIVE LEVEL DIFFICULTY -->
-    <label>GROUND Y: <input id="groundY" type="number" value="440"></label>
+    <label>NUMBER OF LEVELS: <input id="levels" type="number" value="1"></label>
+    <label>INCREMENTAL PLATFORM DISTANCE: <input id="distanceDelta" type="number" value="0"></label> <!-- INCREMENTAL DISTANCE FOR PROGRESSIVE LEVEL DIFFICULTY -->
+    <label>GROUND Y: <input id="groundY" type="number" value="100"></label>
 </div>
 
 <div id="levelsContainer"></div>
@@ -509,12 +509,12 @@ function buildLevelCards() {
 
 card.innerHTML = `
     <h2>LEVEL ${i + 1} SPECS</h2>
-    <label>NUMBER OF GAUNTLETS: <input type="number" class="gauntlets" value="5"></label> 
-    <label>PLATFORMS PER GAUNTLET: <input type="number" class="platforms" value="5"></label> 
-    <label>PLATFORM WIDTH: <input type="number" class="platformWidth" value="250"></label>
-    <label>FIRST GROUND SEGMENT END: <input type="number" class="firstGroundX" value="1500"></label> 
-    <label>GROUND LENGTH BETWEEN GAUNTLETS: <input type="number" class="groundLength" value="1500"></label> 
-    <label>GROUND OVERLAP: <input type="number" class="overlap" value="100"></label> 
+    <label>NUMBER OF GAUNTLETS: <input type="number" class="gauntlets" value="1"></label> 
+    <label>PLATFORMS PER GAUNTLET: <input type="number" class="platforms" value="1"></label> 
+    <label>PLATFORM WIDTH: <input type="number" class="platformWidth" value="100"></label>
+    <label>FIRST GROUND SEGMENT END: <input type="number" class="firstGroundX" value="100"></label> 
+    <label>GROUND LENGTH BETWEEN GAUNTLETS: <input type="number" class="groundLength" value="100"></label> 
+    <label>GROUND OVERLAP: <input type="number" class="overlap" value="0"></label> 
     `;
 
     container.appendChild(card);
@@ -523,6 +523,11 @@ card.innerHTML = `
 
 
 window.addEventListener('load', buildLevelCards);
+
+document.addEventListener('DOMContentLoaded', function() {
+  const levelsInput = document.getElementById('levels');
+  levelsInput.addEventListener('input', buildLevelCards);
+});
 
 function calculate() {
   // PHYSICS
