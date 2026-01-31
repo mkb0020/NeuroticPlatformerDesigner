@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Platform Distance Calculator</title>
+  <title>Platform Calculator</title>
   <style>
 
 html {
@@ -126,6 +126,8 @@ html::-webkit-scrollbar-thumb:hover {
       margin-left: 1.2rem;
       color: #ffffff;
     }
+
+
 
     input {
       width: 150px;
@@ -270,6 +272,46 @@ html::-webkit-scrollbar-thumb:hover {
             transition: transform 0.3s ease;
         }
 
+/* ============================ ALERT MODAL ============================ */
+#alert-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#alert-box {
+  background: #11021bd3;
+  border: 2px solid #c71585;
+  box-shadow: 0 0 50px #c71585;
+  border-radius: 25px;
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 20px 24px;
+  min-width: 300px;
+  max-width: 600px;
+  max-height: 90%;
+}
+
+h4 {
+  font-size: 1.5rem;
+  text-align: center;
+  color: #ff0059;
+  margin-top: 0;
+}
+
+#alert-box button {
+  margin-top: 12px;
+}
+
+.hidden {
+  display: none !important;
+}
+
         #kofi-float:hover img {
             transform: scale(1.1); 
         }
@@ -339,10 +381,7 @@ html::-webkit-scrollbar-thumb:hover {
     height: auto;
 }
 
-/* ============================ FOOTER ============================ */
-
-
-
+/* ============================ MODAL ============================ */
 
 @media (max-width: 930px) {
 
@@ -446,19 +485,19 @@ html::-webkit-scrollbar-thumb:hover {
 
 <div class="card">
   <h2>PHYSICS</h2>
-  <label>GRAVITY: <input id="gravity" type="number" value="1000"></label>
-  <label>JUMP FORCE / UPWARDS VELOCITY:<input id="jumpPower" type="number" value="100"></label>
-  <label>JUMP FORCE MULTIPLIER: <input id="jumpMult" type="number" value="1"></label>
-  <label>BASE SPEED:<input id="baseSpeed" type="number" value="100"></label>
-  <label>SPEED MULTIPLIER:<input id="speedMult" type="number" value="1"></label>
+  <label>GRAVITY (1 to 5000): <input id="gravity" type="number" value="1000" min="1" max="5000"></label>
+  <label>JUMP FORCE / UPWARDS VELOCITY (1 to 1000):<input id="jumpPower" type="number" value="100" min="1" max="1000"></label>
+  <label>JUMP FORCE MULTIPLIER(0.1 to 100): <input id="jumpMult" type="number" value="1" min="0.1" max="100" step="0.1"></label>
+  <label>BASE SPEED (1 to 1000):<input id="baseSpeed" type="number" value="100" min="1" max="1000"></label>
+  <label>SPEED MULTIPLIER (0.1 to 100):<input id="speedMult" type="number" value="1" min="0.1" max="100" step="0.1"></label>
 </div>
 
 
 <div class="card">
   <h2>LEVEL SETUP</h2>
-    <label>NUMBER OF LEVELS: <input id="levels" type="number" value="1"></label>
-    <label>INCREMENTAL PLATFORM DISTANCE: <input id="distanceDelta" type="number" value="0"></label> <!-- INCREMENTAL DISTANCE FOR PROGRESSIVE LEVEL DIFFICULTY -->
-    <label>GROUND Y: <input id="groundY" type="number" value="100"></label>
+    <label>NUMBER OF LEVELS (1 to 20): <input id="levels" type="number" value="1" min="1" max="20"></label>
+    <label>INCREMENTAL PLATFORM DISTANCE (-500 to 500): <input id="distanceDelta" type="number" value="0" min="-500" max="500"></label> <!-- INCREMENTAL DISTANCE FOR PROGRESSIVE LEVEL DIFFICULTY -->
+    <label>GROUND Y (100 to 2000): <input id="groundY" type="number" value="100" min="100" max="2000"></label>
 </div>
 
 <div id="levelsContainer"></div>
@@ -488,6 +527,13 @@ html::-webkit-scrollbar-thumb:hover {
         </a>
 </div>
 
+<div id="alert-overlay" class="hidden">
+  <div id="alert-box">
+    <h4 id="alert-title">YOU ENTERED UNREALISTIC VALUES</h4>
+    <p id="alert-message"></p>
+    <button id="alert-ok" type="button">OK</button>
+  </div>
+</div>
 
 <div id="scroll-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
           <a href="javascript:void(0);" class="button-container" aria-label="Scroll to top">
@@ -496,6 +542,36 @@ html::-webkit-scrollbar-thumb:hover {
 </div>
 
 <script>
+/* =============================== ALERT MODAL SETUP ================================ */
+document.addEventListener("DOMContentLoaded", () => {
+  const overlay = document.getElementById("alert-overlay");
+  const okBtn = document.getElementById("alert-ok");
+
+  okBtn.addEventListener("click", () => {
+    overlay.classList.add("hidden");
+  });
+});
+
+const friendlyHeaders = [
+  "THAT WOULD BREAK THE LAWS OF THIS UNIVERSE",
+  "THAT VALUE MIGHT BE A BIT AMBITIOUS...",
+  "WE ADMIRE THE CONFIDENCE - BUT LET'S DIAL IT BACK.",
+  "WE LOVE THE ENTHUSIASM, BUT...",
+  "FUN IDEA! BUT..."
+];
+
+function showAlert(message) {
+  const overlay = document.getElementById("alert-overlay");
+  const msg = document.getElementById("alert-message");
+  const title = document.getElementById("alert-title");
+
+  title.textContent =
+    friendlyHeaders[Math.floor(Math.random() * friendlyHeaders.length)];
+  msg.textContent = message;
+
+  overlay.classList.remove("hidden");
+}
+
 function buildLevelCards() {
   const container = document.getElementById('levelsContainer');
   container.innerHTML = '';
@@ -509,12 +585,12 @@ function buildLevelCards() {
 
 card.innerHTML = `
     <h2>LEVEL ${i + 1} SPECS</h2>
-    <label>NUMBER OF GAUNTLETS: <input type="number" class="gauntlets" value="1"></label> 
-    <label>PLATFORMS PER GAUNTLET: <input type="number" class="platforms" value="1"></label> 
-    <label>PLATFORM WIDTH: <input type="number" class="platformWidth" value="100"></label>
-    <label>FIRST GROUND SEGMENT END: <input type="number" class="firstGroundX" value="100"></label> 
-    <label>GROUND LENGTH BETWEEN GAUNTLETS: <input type="number" class="groundLength" value="100"></label> 
-    <label>GROUND OVERLAP: <input type="number" class="overlap" value="0"></label> 
+    <label>NUMBER OF GAUNTLETS (1 to 50): <input type="number" class="gauntlets" value="1" min="1" max="50"></label> 
+    <label>PLATFORMS PER GAUNTLET (1 to 100): <input type="number" class="platforms" value="1" min="1" max="100"></label> 
+    <label>PLATFORM WIDTH (10 to 1000): <input type="number" class="platformWidth" value="100" min="10" max="1000"></label>
+    <label>FIRST GROUND SEGMENT END (0 to 10000): <input type="number" class="firstGroundX" value="100" min="0" max="10000"></label> 
+    <label>GROUND LENGTH BETWEEN GAUNTLETS (10 to 5000): <input type="number" class="groundLength" value="100" min="10" max="5000"></label> 
+    <label>GROUND OVERLAP (-500 to 500): <input type="number" class="overlap" value="0" min="-500" max="500"></label> 
     `;
 
     container.appendChild(card);
@@ -530,6 +606,54 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function calculate() {
+  // INPUT VALIDATION
+  const validations = {
+    gravity: { min: 1, max: 5000, name: 'Gravity' },
+    jumpPower: { min: 1, max: 1000, name: 'Jump Force' },
+    jumpMult: { min: 0.1, max: 100, name: 'Jump Multiplier' },
+    baseSpeed: { min: 1, max: 1000, name: 'Base Speed' },
+    speedMult: { min: 0.1, max: 100, name: 'Speed Multiplier' },
+    levels: { min: 1, max: 20, name: 'Number of Levels' },
+    distanceDelta: { min: -500, max: 500, name: 'Incremental Platform Distance' },
+    groundY: { min: 100, max: 2000, name: 'Ground Y' }
+  };
+
+  // VALIDATION
+  for (const [id, rules] of Object.entries(validations)) {
+    const input = document.getElementById(id);
+    const value = +input.value;
+    if (value < rules.min || value > rules.max) {
+      showAlert(`${rules.name} must be between ${rules.min} and ${rules.max}. You entered: ${value}`);
+      input.focus();
+      return;
+    }
+  }
+
+  // VALIDATION
+  const levelCards = document.querySelectorAll('#levelsContainer .card');
+  for (let l = 0; l < levelCards.length; l++) {
+    const card = levelCards[l];
+    const levelNum = l + 1;
+    
+    const levelValidations = {
+      gauntlets: { el: card.querySelector('.gauntlets'), min: 1, max: 50, name: `Level ${levelNum} - Number of Gauntlets` },
+      platforms: { el: card.querySelector('.platforms'), min: 1, max: 100, name: `Level ${levelNum} - Platforms per Gauntlet` },
+      platformWidth: { el: card.querySelector('.platformWidth'), min: 10, max: 1000, name: `Level ${levelNum} - Platform Width` },
+      firstGroundX: { el: card.querySelector('.firstGroundX'), min: 0, max: 10000, name: `Level ${levelNum} - First Ground Segment End` },
+      groundLength: { el: card.querySelector('.groundLength'), min: 10, max: 5000, name: `Level ${levelNum} - Ground Length Between Gauntlets` },
+      overlap: { el: card.querySelector('.overlap'), min: -500, max: 500, name: `Level ${levelNum} - Ground Overlap` }
+    };
+
+    for (const [key, rules] of Object.entries(levelValidations)) {
+      const value = +rules.el.value;
+      if (value < rules.min || value > rules.max) {
+        showAlert(`${rules.name} must be between ${rules.min} and ${rules.max}. You entered: ${value}`);
+        rules.el.focus();
+        return;
+      }
+    }
+  }
+
   // PHYSICS
   const g = +gravity.value;
   const jp = +jumpPower.value;
@@ -549,8 +673,6 @@ function calculate() {
   const maxJumpHeight = (jumpForce ** 2) / (2 * g);
 
   const finalDistance = maxJumpDistance - delta;
-
-  const levelCards = document.querySelectorAll('#levelsContainer .card');
 
   let result = {
     jumpForce,
@@ -580,25 +702,26 @@ function calculate() {
     let gauntlets = [];
 
     for (let g = 0; g < gauntletsPerLevel; g++) {
-      // GAUNTLET START X: Current Ground Segment End X - Ground Overlap
+      // GAUNTLET START 
       const gauntletStartX = currentGroundEndX - overlap;
 
       // CALCULATE PLATFORM POSITIONS
       let platforms = [];
       let prevY = gy;
-      let currentPlatformX = gauntletStartX; // Platform 1 = Last Ground Segment End - overlap
+      let currentPlatformX = gauntletStartX; //PLATFORM 1 = LAST GROUND SEGMENT END - OVERLAP
 
       for (let p = 0; p < platformsPerGauntlet; p++) {
-        // RANDOM Y POSITION
-        const maxUp = prevY + maxJumpHeight * 0.9;
-        const minY = gy + 50;
-        const y = Math.random() * (maxUp - minY) + minY;
+        // RANDOM Y POSITION 
+        const highestReachable = Math.max(0, prevY - maxJumpHeight * 0.9); // UPPER LIMIT
+        const lowestReachable = Math.min(gy, prevY + maxJumpHeight * 0.9); // LOWER LIMIT
+        
+        const y = Math.random() * (lowestReachable - highestReachable) + highestReachable;
 
         platforms.push({
           platformNumber: p + 1,
           startX: currentPlatformX.toFixed(2),
           endX: (currentPlatformX + platformLen).toFixed(2),
-          y: y.toFixed(1)
+          y: Math.max(0, y).toFixed(1) // NO NEGATIVE NUMBERS
         });
 
         prevY = y;
@@ -606,17 +729,17 @@ function calculate() {
         currentPlatformX += platformStartToStart;
       }
 
-      // GAUNTLET END X: The X value of the last platform in the gauntlet + the level's platform length
+      // GAUNTLET END X
       const lastPlatformStartX = parseFloat(platforms[platforms.length - 1].startX);
       const gauntletEndX = lastPlatformStartX + platformLen;
 
-      // GAUNTLET LENGTH: (Final Gauntlet Platform X + Platform Length) - Gauntlet start
+      // GAUNTLET LENGTH
       const gauntletLength = gauntletEndX - gauntletStartX;
 
-      // NEXT GROUND SEGMENT START = Gauntlet End X - overlap
+      // NEXT GROUND SEGMENT START = GAUNTLET END - OVERLAP
       const nextGroundStartX = gauntletEndX - overlap;
 
-      // NEXT GROUND SEGMENT END = Ground Segment Start X + Ground Segment Length
+      // NEXT GROUND SEGMENT END = GROUND START X + GROUND LENGTH
       const nextGroundEndX = nextGroundStartX + groundLen;
 
       gauntlets.push({
