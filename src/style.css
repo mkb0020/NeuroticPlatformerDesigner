@@ -1,0 +1,648 @@
+
+
+html {
+  min-height: 100%;         
+  overflow-y: scroll;        
+}
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #000000;
+      color: #FFFFFF;
+      font-family: 'GothNerd';
+      padding: 10px;
+    }
+
+
+
+html::-webkit-scrollbar {
+  width: 15px;
+  height: 12px;
+}
+
+html::-webkit-scrollbar-track {
+  background: #0a0015;
+  border-left: 2px solid #5702b1c2;
+  box-shadow: inset 0 0 12px #000000cc;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    145deg,
+    #ff69b4 0%,
+    #c71585 5%,
+    #dc4ce8 10%,
+    #830cde 15%,
+    #00ffff 20%,
+    #67FEBD 25%
+  );
+  border-radius: 8px;          
+  background-size: 300% 300%;    
+  filter: hue-rotate(0deg);
+  animation: 
+    hueCycle 18s linear infinite,    
+    neonFlow 8s ease-in-out infinite alternate; 
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  animation-duration: 12s, 4s;     
+  filter: brightness(1.2) saturate(1.5);   
+}
+
+@keyframes hueCycle {
+  0%   { filter: hue-rotate(0deg) brightness(1.1) saturate(1.3); }
+  25%  { filter: hue-rotate(90deg) brightness(1.3) saturate(1.6); }
+  50%  { filter: hue-rotate(180deg) brightness(1.4) saturate(1.8); }
+  75%  { filter: hue-rotate(270deg) brightness(1.2) saturate(1.5); }
+  100% { filter: hue-rotate(360deg) brightness(1.1) saturate(1.3); }
+}
+
+@keyframes neonFlow {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+
+
+    @font-face {
+    font-family: 'GothNerd'; 
+    src: url('assets/GothNerd.ttf') format('truetype'); 
+    }
+
+    .background-gradient {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(to bottom, #37025A 40%, #8a2be2 60%, #c71585 85%, #c71585  97%, #ff69b4 100%);
+      opacity: 0.85;
+      z-index: -2;
+    }
+
+    h1 {
+        font-size: 2.7rem;
+        text-align: center;
+          background: linear-gradient(45deg, #FFC7FF, #ff69b4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    h3 {
+        position: relative;
+        font-size: 1.4rem;
+        text-align: center;
+        color: #FFFFFF;
+        max-width: 900px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        color: #67FEBD;
+    }    
+
+  a {
+      color: #58E84C;
+    }
+
+    .card {
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #11021bd3;
+      border: 2px solid linear-gradient(45deg, #830cde, #dc4ce8);
+      box-shadow: 0 0 15px #00FFFF;
+      border-radius: 25px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(20px);
+      max-width: 800px;
+
+    }
+    
+    .message {
+      position: relative;
+      color: #FFC7FF;
+      font-size: 1rem;
+      margin-top: 1rem;
+    }
+
+    .note {
+      position: relative;
+      color: #FFFFFF;
+      font-size: 1.1rem;
+      margin-top: 0.5rem;
+    }
+
+    .note strong {
+        color: #FFC7FF;
+    }
+
+    label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      gap: 1rem;
+      font-size: 1rem;
+      margin-left: 1.2rem;
+      color: #ffffff;
+    }
+
+
+
+    input {
+      width: 150px;
+      background: #2b034a5a;
+      color: #FFFFFF;
+      border: 2px solid #9090c0b1;
+      border-radius: 6px;
+      padding: 0.3rem;
+      font-family: 'GothNerd';
+      font-size: 0.9rem;
+    }
+
+    input[type="number"]:focus,
+    select:focus,
+    textarea:focus {
+    outline: none;
+    border-color: #00FFFF;
+    box-shadow: 0 0 15px #00FFFF;
+}
+
+    button {
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(45deg, #830cde, #dc4ce8);
+      color: #FFFFFF;
+      border: 2px solid #FFFFFF;
+      padding: 0.5rem 3rem;
+      border-radius: 35px;
+      font-family: 'GothNerd';
+      font-size: 1.1rem;
+      cursor: pointer;
+      margin-top: 1rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 30px #830cde;
+    }
+
+
+    button:hover {
+        background: linear-gradient(45deg, #dc4ce8, #67FEBD);
+        box-shadow: 0 5px 20px #dc4ce8;
+}
+
+    .results-card {
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);  
+      background: #11021bd3;
+      border: 2px solid linear-gradient(45deg, #830cde, #dc4ce8);
+      box-shadow: 0 0 15px #00FFFF;
+      border-radius: 25px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(20px);
+      max-width: 1050px;
+
+    }
+
+.button-group {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 0px;
+  margin-top: 20px;
+}
+
+.button-group button {
+  position: static !important;
+  transform: none !important;
+  left: auto !important;
+}
+
+    pre {
+      background: #31065260;
+      color: #67FEBD;
+      font-size: 1rem;
+      border: 3px solid transparent;
+      border-image: linear-gradient(45deg, #00FFFF, #dc4ce8) 1;
+      border-radius: 10px;
+      padding: 1rem;
+      overflow-x: auto;
+      margin-top: 0.5rem;
+    }
+
+/*================== FROM MAKEOVER =======================*/
+    #jsonFile {
+      position: relative;
+      background: linear-gradient(45deg, #830cde8c, #db4ce87e);
+      color: #FFFFFF;
+      padding: 1rem 4rem;
+      border-radius: 10px;
+      font-family: 'GothNerd';
+      font-size: 1.1rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      width: 70%;
+    }
+
+    #jsonFile::file-selector-button {
+      background: linear-gradient(45deg, #657383, #9090C0);
+      color: #FFFFFF;
+      padding: 0.5rem 1.5rem;
+      border-radius: 15px;
+      font-family: 'GothNerd';
+      font-size: 0.9rem;
+      cursor: pointer;
+      margin-right: 1rem;
+      text-transform: uppercase;
+    }
+
+    #jsonFile::file-selector-button:hover {
+      background: linear-gradient(45deg, #9090C0, #67FEBD);
+    }
+
+    .level-btn {
+      position: static !important;
+      transform: none !important;
+      left: auto !important;
+      display: inline-block;
+      background: linear-gradient(45deg, #830cde, #dc4ce8);
+      color: #FFFFFF;
+      border: 1px solid #FFFFFF;
+      padding: 0.5rem 1.2rem;
+      border-radius: 20px 20px 0 0;
+      font-family: 'GothNerd';
+      font-size: 0.9rem;
+      cursor: pointer;
+      margin: 0.3rem 0.3rem 0 0.3rem;
+      box-shadow: 0 0 5px #830cde;
+      border-bottom: none;
+    }
+
+    .level-btn:hover {
+      background: linear-gradient(45deg, #dc4ce8, #67FEBD);
+      box-shadow: 0 3px 5px #dc4ce8;
+    }
+
+    .level-btn.active {
+      background: linear-gradient(45deg, #00FFFF, #830cde);
+      box-shadow: 0 0 10px #00FFFF;
+    }
+
+
+/* ============================ EXAMPLE MODALS ============================ */
+
+.modal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.9);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+  backdrop-filter: blur(10px);
+}
+
+.modal.hidden {
+  display: none;
+}
+
+.modal-content {
+  position: relative;
+  background: #11021bd3;
+  border: 2px solid #830cde;
+  box-shadow: 0 0 30px #00FFFF;
+  border-radius: 25px;
+  padding: 2rem;
+  max-width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  backdrop-filter: blur(20px);
+}
+
+.modal-content h2 {
+  color: #67FEBD;
+  margin-top: 0;
+  text-align: center;
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1.5rem;
+  font-size: 2.5rem;
+  color: #ff69b4;
+  cursor: pointer;
+  transition: color 0.3s ease;
+  line-height: 1;
+}
+
+.modal-close:hover {
+  color: #67FEBD;
+  transform: scale(1.2);
+}
+
+.modal-image {
+  display: block;
+  max-width: 70%;
+  height: auto;
+  margin: 1rem auto;
+  border: 2px solid #9090c0b1;
+  border-radius: 10px;
+  box-shadow: 0 0 15px #00FFFF;
+}
+
+
+/* ============================ RAINBOW BACK TO TOP ============================ */
+#scroll-top {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 1000;
+  cursor: pointer;
+  width: 35px;
+  height: 45px;
+  border-radius: 50%;
+}
+
+#scroll-top .button-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#scroll-top img {
+  width: 50px;
+  height: 60px;
+  transition: transform 0.3s ease;
+  animation: hue-shift-slow 8s linear infinite;
+}
+
+#scroll-top:hover img {
+  transform: scale(1.1);
+  animation: hue-shift-fast 3s linear infinite;
+}
+
+@keyframes hue-shift-slow {
+  0%   { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+@keyframes hue-shift-fast {
+  0%   { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+#scroll-top .arrow-overlay {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3.5rem;
+  font-family: 'GothNerd';
+  color: rgb(0,0,0); 
+  pointer-events: none; 
+  user-select: none;
+  z-index: 1001;
+}
+
+
+/* ============================ TIP JAR ============================ */
+        #kofi-float {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            z-index: 1000;
+            cursor: pointer;
+        }
+
+        #kofi-float img {
+            width: 55px; 
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+/* ============================ ALERT MODAL ============================ */
+#alert-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#alert-box {
+  background: #11021bd3;
+  border: 2px solid #c71585;
+  box-shadow: 0 0 50px #c71585;
+  border-radius: 25px;
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 20px 24px;
+  min-width: 300px;
+  max-width: 600px;
+  max-height: 90%;
+}
+
+h4 {
+  font-size: 1.5rem;
+  text-align: center;
+  color: #ff0059;
+  margin-top: 0;
+}
+
+#alert-box button {
+  margin-top: 12px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+        #kofi-float:hover img {
+            transform: scale(1.1); 
+        }
+
+        
+        .hearts {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            pointer-events: none; 
+            overflow: hidden;
+  
+        }
+
+       
+        .heart {
+            position: absolute;
+            bottom: 50px;
+            left: 30px;
+            font-size: 16px;
+            animation: float-up 3s infinite ease-in;
+            opacity: 0;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-120px) translateX(var(--drift)) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
+        
+        #kofi-float .hearts .heart {
+            display: none;
+        }
+
+        
+        #kofi-float:hover .hearts .heart {
+            display: block;
+            animation-delay: var(--delay);
+        }
+  
+
+/* ============================ NIELS ============================ */
+.Niels-container {
+    margin-top: 50px;
+    position: relative;
+    text-align: center;
+    justify-content: center;
+}
+
+
+.Niels-container img {
+    max-width: 175px; 
+    height: auto;
+}
+
+/* ============================ MOBILE ============================ */
+
+@media (max-width: 930px) {
+    .message {
+      font-size: 0.8rem;
+    }
+
+.Niels-container {
+    margin-top: 20px;
+}
+
+
+.Niels-container img {
+    max-width: 150px; 
+    height: auto;
+}
+
+   h1 {
+        font-size: 1.4rem;
+    }
+
+    h3 {
+        font-size: 0.8rem;
+        text-align: center;
+        color: #FFFFFF;
+    }
+
+    h2 {
+        font-size: 1rem;
+        color: #67FEBD;
+    }    
+
+    .card {
+      padding: 1rem;
+      margin-bottom: 2rem;
+      max-width: 85%;
+    }
+
+    label {
+      margin-bottom: 0.5rem;
+      gap: 1.3rem;
+      font-size: 0.8rem;
+      margin-left: 0.5rem;
+ 
+    }
+
+    input {
+      width: 60px;
+      padding: 0.3rem;
+      font-size: 0.7rem;
+      gap: 1.5rem;
+    }
+
+
+    button {
+      padding: 0.7rem 2rem;
+      font-size: 1rem;
+    }
+
+    .results-card {
+      padding: 1rem;
+      max-width: 90%;
+    }
+
+#scroll-top {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
+
+#scroll-top img {
+  width: 35px;
+  height: 45px;
+}
+
+#kofi-float {
+            bottom: 10px;
+            left: 10px;
+        }
+
+#kofi-float img {
+            width: 50px; 
+        }
+
+.hearts {
+    display: none;
+}
+.heart {
+    display: none;
+}
+
+
+    #jsonFile {
+      padding: 0.6rem 1.5rem;
+      font-size: 0.7rem;
+    }
+
+    #jsonFile::file-selector-button {
+      padding: 0.4rem 0.5rem;
+      font-size: 0.7rem;
+      margin-right: 0.3rem;
+    }
+
+    .level-btn {
+      padding: 0.4rem 1rem;
+      font-size: 0.8rem;
+      margin: 0.2rem;
+    }
+
+
+}
+

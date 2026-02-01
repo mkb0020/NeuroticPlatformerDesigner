@@ -1,134 +1,98 @@
-# 🧮 NEUROTIC PLATFORMER DESIGN CALCULATOR
+# 🧮 NEUROTIC LEVEL DESIGN CALCULATOR
 
-A physics-based level design tool for **2D platformer developers** who want perfectly spaced, symmetrical, and *mathematically valid* platform layouts.
+A physics-based level design tool for 2D platformer developers who want **perfectly spaced, symmetrical, and mathematically valid platform layouts**.
 
-Designed for the neurotic among us who want **consistency, balance, and repeatability** instead of guesswork.
-
----
+Built for the neurotic among us who crave **consistency, balance, and repeatability** instead of guesswork.
 
 ## 📐 WHAT IS THIS?
 
-A tool to help you calculate:
+The **NEUROTIC LEVEL DESIGN CALCULATOR** helps you design platformer levels using your game's physics, then export the results in formats that are actually useful in a game engine.
 
-* Maximum jump distance
-* Maximum jump height
-* Safe horizontal platform gaps
-* Structured platform layouts across multiple levels and gauntlets
+### It does two things:
 
-All based on **real jump physics** using:
+- Calculates safe, consistent platform layouts using player physics
 
-* Player speed
-* Jump force
-* Gravity
-* Difficulty scaling via multipliers
+- Exports either:
 
-Output: clean, structured data you can copy directly into your game.
+    - A full detailed JSON (everything), or
 
----
+    - A ZIP of per-level JSON files containing only ground segments and platforms, reformatted for engine use
+
+## 🧠 WHAT IT CALCULATES
+
+Based on your player physics and difficulty scaling, the calculator determines:
+
+- Maximum jump distance
+
+- Maximum jump height
+
+- Safe horizontal platform gaps
+
+- Platform start/end positions
+
+- Ground segment placement
+
+- Structured layouts across:
+
+    - Multiple levels
+
+    - Multiple gauntlets per level
+
+### All calculations are derived from:
+
+- Player speed
+
+- Jump force
+
+- Gravity
+
+- Optional multipliers
+
+No magic numbers. No eyeballing. Just math.
 
 ## 💥 FEATURES
 
-* Physics-based jump calculations
-* Multi-level & multi-gauntlet layout generation
-* Consistent platform spacing per level
-* Optional ground overlap tuning
-* Mobile-friendly UI (browser-based)
-* Packaged desktop app (via Tauri)
+- Physics-based jump calculations
 
----
+- Multi-level & multi-gauntlet generation
+
+- Consistent platform spacing per level
+
+- Optional ground overlap tuning
+
+- Clean, structured JSON output
+
+
 
 ## 🛑 CAVEATS (PLEASE READ)
 
-In a given level, this tool assumes:
+Within a single level, this tool assumes:
 
-* All platforms are the **same length**
-* The **horizontal distance** between each platform is the same
-* The **number of platforms per gauntlet** is the same
-* The **distance between gauntlets** is the same
+- All platforms are the same width
 
-So if you're neurotic and want everything **symmetrical, evenly spaced, and predictable**, this tool will feel like home.
+- Horizontal spacing between platforms is uniform
 
-If you want hand-crafted chaos — this is probably not it.
+- Each gauntlet contains the same number of platforms
 
----
+- Distance between gauntlets is consistent
 
-## ⚒️ Output Structure
-
-The calculator outputs a structured object similar to the following.
-Values shown here are placeholders for demonstration purposes.
-
-```js
-{
-  "jumpForce": 99999, // Input jump force × multiplier
-  "effectiveSpeed": 99999, // Base speed × multiplier
-  "maxJumpDistance": "99999", // effectiveSpeed × (2 × jumpForce) / gravity
-  "maxJumpHeight": "99999", // (jumpForce²) / (2 × gravity)
-  "levels": [
-    {
-      "level": 1,
-      "gauntletsPerLevel": 99999,
-      "platformsPerGauntlet": 99999,
-      "platformWidth": 99999,
-      "firstGroundEnd": 99999,
-      "groundSegmentLength": 99999,
-      "overlap": 99999,
-      "platformGap": "99999",
-      "platformStartToStart": "99999",
-      "gauntlets": [
-        {
-          "gauntletNumber": 99999,
-          "gauntletStartX": "99999",
-          "gauntletEndX": "99999",
-          "gauntletLength": "999990",
-          "platforms": [
-            {
-              "platformNumber": 99999,
-              "startX": "99999",
-              "endX": "99999",
-              "y": "99999"
-            }
-            // ...additional platforms
-          ],
-          "nextGroundSegmentStartX": "99999",
-          "nextGroundSegmentEndX": "99999"
-        }
-        // ...additional gauntlets
-      ]
-    }
-    // ...additional levels
-  ]
-}
-```
-
----
-
-## 💡 How to Use
-
-1. Enter your player physics values
-2. Configure level and platform settings
-3. Click **DO THE MATHS**
-4. Copy the output into your game
-
-Works directly in the browser or as a desktop app.
-
----
-
-## 🎥 Tutorial Video
-
-A short walkthrough video is included to explain:
-
-* Input values
-* Physics assumptions
-* How to use the output in a real game
-
-👉 **Tutorial link coming soon**
-
----
+If you want everything symmetrical, evenly spaced, and predictable, you’re in the right place.
 
 
-## 📜 License
 
-This project is licensed under the MIT License.
-See the `LICENSE` file for details.
 
----
+## 🛠️ HOW TO USE
+
+- Enter your player physics values
+
+- Configure level, gauntlet, and platform settings
+
+- Click **DO THE MATHS**
+
+- Choose your export
+
+- Create beautiful evenly spaced levels
+
+## 🎥 TUTORIAL
+
+**Coming soon**

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Neurotic Level Design Calculator</title>
+  <link rel="stylesheet" href="style.css">
+
+</head>
+
+<body>
+
+<div class="background-gradient"></div>
+
+<div class="Niels-container"><img class="Niels" src="assets/Niels.png"></div>
+
+<h1>NEUROTIC LEVEL DESIGN CALCULATOR</h1>
+<h3>GENERATE EVENLY SPACED PATFORM LOCATIONS/DISTANCES FOR SIDE-SCROLLING PLATFOMERS</h3>
+
+<div class="card">
+  <h2>GLOBAL PHYSICS SETTINGS</h2>
+  <label>GRAVITY (1 to 5000): <input type="number" id="gravity" value="400" min="1" max="5000"></label>
+  <label>JUMP FORCE (1 to 1000): <input type="number" id="jumpPower" value="270" min="1" max="1000"></label>
+  <label>JUMP MULTIPLIER (0.1 to 100): <input type="number" id="jumpMult" value="1" min="0.1" max="100" step="0.1"></label>
+  <label>BASE SPEED (1 to 1000): <input type="number" id="baseSpeed" value="150" min="1" max="1000"></label>
+  <label>SPEED MULTIPLIER (0.1 to 100): <input type="number" id="speedMult" value="1" min="0.1" max="100" step="0.1"></label>
+  <div class="message">If you don't use multipliers, keep them set to 1</div>
+</div>
+
+<div class="card">
+  <h2>GLOBAL LEVEL SETTINGS</h2>
+  <label>NUMBER OF LEVELS (1 to 20): <input type="number" id="levels" value="1" min="1" max="20"></label>
+  <label>GROUND Y POSITION (100 to 2000): <input type="number" id="groundY" value="440" min="100" max="2000"></label>
+  <label>INCREMENTAL PLATFORM DISTANCE (-500 to 500): <input type="number" id="distanceDelta" value="0" min="-500" max="500"></label>
+  <div class="message">Incremental distance is used to make subsequent levels easier or more difficult. For example, a value of 10 will increase the distance between platforms by 10 pixels in each successive level, creating a linear difficulty curve.</div>
+</div>
+
+<div class="card">
+  <h2>NOTE:</h2>
+  <div class="note">Within a single level, all platforms have the <strong>same width</strong>, all gauntlets have the <strong>same number of platforms</strong>, and <strong>spacing</strong> between platforms / gauntlets <strong>will be the same</strong>. Different levels can have completely different specifications to create variety and difficulty progression.</div>
+</div>
+
+<div id="levelsContainer"></div>
+
+<button onclick="calculate()">DO THE MATHS!</button>
+
+<div id="resultsContainer" style="display: none;">
+  <div class="results-card">
+    <h2>RESULTS</h2>
+    <div class="message">Download Options:
+      <ul>
+        <li>Single JSON file with full details for all levels - <a href="#" onclick="showModal('detailedExample'); return false;">example</a></li>
+        <li>Zip folder with individual JSON files for each level - reformatted to include ground segment and platform specs only - <a href="#" onclick="showModal('reformattedExample'); return false;">example</a></li>
+      </ul>
+    </div>
+    <div class="button-group">
+      <button id="downloadDetailedBtn" onclick="downloadDetailedJSON()" style="display: none;">DETAILED JSON</button>
+      <button id="downloadMakeoverBtn" onclick="downloadMakeoverZip()" style="display: none;">REFORMATTED ZIP</button>
+    </div>
+    <h2>DETAILED LEVEL SPECS</h2>
+    <pre id="output"></pre>
+  </div>
+</div>
+
+<div id="detailedExample" class="modal hidden">
+  <div class="modal-content">
+    <span class="modal-close" onclick="closeModal('detailedExample')">&times;</span>
+    <h2>DETAILED JSON EXAMPLE</h2>
+    <img src="assets/detailed-json-example.png" alt="Detailed JSON Example" class="modal-image">
+  </div>
+</div>
+
+<div id="reformattedExample" class="modal hidden">
+  <div class="modal-content">
+    <span class="modal-close" onclick="closeModal('reformattedExample')">&times;</span>
+    <h2>REFORMATTED ZIP EXAMPLE</h2>
+    <img src="assets/reformatted-zip-example.png" alt="Reformatted ZIP Example" class="modal-image">
+  </div>
+</div>
+
+<div id="kofi-float">
+  <a href="https://ko-fi.com/mkb0020" target="_blank" rel="noopener noreferrer">
+    <img src="assets/tipjar.png" alt="Support me on Ko-fi">
+    <div class="hearts">
+      <div class="heart" style="--delay: 0s; --drift: -20px;">❤️</div>
+      <div class="heart" style="--delay: 0.5s; --drift: 15px;">💖</div>
+      <div class="heart" style="--delay: 1s; --drift: -10px;">💕</div>
+      <div class="heart" style="--delay: 1.5s; --drift: 20px;">❤️</div>
+      <div class="heart" style="--delay: 2s; --drift: -15px;">💗</div>
+      <div class="heart" style="--delay: 2.5s; --drift: 10px;">💖</div>
+    </div>
+  </a>
+</div>
+
+<div id="alert-overlay" class="hidden">
+  <div id="alert-box">
+    <h4 id="alert-message"></h4>
+    <button id="alert-ok" type="button">OK</button>
+  </div>
+</div>
+
+<div id="scroll-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+  <a href="javascript:void(0);" class="button-container" aria-label="Scroll to top">
+    <span class="arrow-overlay"><img src="assets/top.png" alt="Scroll to top"></span>
+  </a>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+<script type="module" src="calculator.js"></script>
+<script type="module" src="makeover.js"></script>
+
+<script>
+window.showModal = function(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.classList.remove('hidden');
+  }
+};
+
+window.closeModal = function(modalId) {
+  const modal = document.getElementById(modalId);
+  if (modal) {
+    modal.classList.add('hidden');
+  }
+};
+
+document.addEventListener('click', function(event) {
+  if (event.target.classList.contains('modal')) {
+    event.target.classList.add('hidden');
+  }
+});
+
+document.addEventListener('keydown', function(event) {
+  if (event.key === 'Escape') {
+    document.querySelectorAll('.modal').forEach(modal => {
+      modal.classList.add('hidden');
+    });
+  }
+});
+
+</script>
+
+</body>
+</html>
