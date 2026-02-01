@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>JSON MAKEOVER</title>
+  <style>
+
+html {
+  min-height: 100%;         
+  overflow-y: scroll;        
+}
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #000000;
+      color: #FFFFFF;
+      font-family: 'GothNerd';
+      padding: 10px;
+    }
+
+html::-webkit-scrollbar {
+  width: 15px;
+  height: 12px;
+}
+
+html::-webkit-scrollbar-track {
+  background: #0a0015;
+  border-left: 2px solid #5702b1c2;
+  box-shadow: inset 0 0 12px #000000cc;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    145deg,
+    #ff69b4 0%,
+    #c71585 5%,
+    #dc4ce8 10%,
+    #830cde 15%,
+    #00ffff 20%,
+    #67FEBD 25%
+  );
+  border-radius: 8px;          
+  background-size: 300% 300%;    
+  filter: hue-rotate(0deg);
+  animation: 
+    hueCycle 18s linear infinite,    
+    neonFlow 8s ease-in-out infinite alternate; 
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  animation-duration: 12s, 4s;     
+  filter: brightness(1.2) saturate(1.5);   
+}
+
+@keyframes hueCycle {
+  0%   { filter: hue-rotate(0deg) brightness(1.1) saturate(1.3); }
+  25%  { filter: hue-rotate(90deg) brightness(1.3) saturate(1.6); }
+  50%  { filter: hue-rotate(180deg) brightness(1.4) saturate(1.8); }
+  75%  { filter: hue-rotate(270deg) brightness(1.2) saturate(1.5); }
+  100% { filter: hue-rotate(360deg) brightness(1.1) saturate(1.3); }
+}
+
+@keyframes neonFlow {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+
+
+    @font-face {
+    font-family: 'GothNerd'; 
+    src: url('GothNerd.ttf') format('truetype'); 
+    }
+
+    .background-gradient {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(to bottom, #37025A 40%, #8a2be2 60%, #c71585 85%, #c71585  97%, #ff69b4 100%);
+      opacity: 0.85;
+      z-index: -2;
+    }
+
+    h1 {
+        font-size: 2.7rem;
+        text-align: center;
+          background: linear-gradient(45deg, #FFC7FF, #ff69b4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    h3 {
+        position: relative;
+        font-size: 1.2rem;
+        text-align: center;
+        color: #FFFFFF;
+        max-width: 700px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    a {
+      color: #58E84C;
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        color: #67FEBD;
+    }    
+
+    .card {
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #11021bd3;
+      border: 2px solid linear-gradient(45deg, #830cde, #dc4ce8);
+      box-shadow: 0 0 15px #00FFFF;
+      border-radius: 25px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(20px);
+      max-width: 800px;
+
+    }
+
+
+
+    button {
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(45deg, #830cde, #dc4ce8);
+      color: #FFFFFF;
+      border: 2px solid #FFFFFF;
+      padding: 0.5rem 3rem;
+      border-radius: 35px;
+      font-family: 'GothNerd';
+      font-weight: bold;
+      font-size: 1.2rem;
+      cursor: pointer;
+      margin-top: 1rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 30px #830cde;
+    }
+
+
+    button:hover {
+        background: linear-gradient(45deg, #dc4ce8, #67FEBD);
+        box-shadow: 0 5px 20px #dc4ce8;
+}
+
+    #jsonFile {
+      position: relative;
+      background: linear-gradient(45deg, #830cde8c, #db4ce87e);
+      color: #FFFFFF;
+      padding: 1rem 4rem;
+      border-radius: 10px;
+      font-family: 'GothNerd';
+      font-size: 1.1rem;
+      cursor: pointer;
+      text-transform: uppercase;
+      width: 70%;
+    }
+
+    #jsonFile::file-selector-button {
+      background: linear-gradient(45deg, #657383, #9090C0);
+      color: #FFFFFF;
+      padding: 0.5rem 1.5rem;
+      border-radius: 15px;
+      font-family: 'GothNerd';
+      font-size: 0.9rem;
+      cursor: pointer;
+      margin-right: 1rem;
+      text-transform: uppercase;
+    }
+
+    #jsonFile::file-selector-button:hover {
+      background: linear-gradient(45deg, #9090C0, #67FEBD);
+    }
+
+    /* Level buttons - smaller and organized */
+    .level-btn {
+      position: static !important;
+      transform: none !important;
+      left: auto !important;
+      display: inline-block;
+      background: linear-gradient(45deg, #830cde, #dc4ce8);
+      color: #FFFFFF;
+      border: 1px solid #FFFFFF;
+      padding: 0.5rem 1.2rem;
+      border-radius: 20px 20px 0 0;
+      font-family: 'GothNerd';
+      font-size: 0.9rem;
+      cursor: pointer;
+      margin: 0.3rem 0.3rem 0 0.3rem;
+      box-shadow: 0 0 5px #830cde;
+      border-bottom: none;
+    }
+
+    .level-btn:hover {
+      background: linear-gradient(45deg, #dc4ce8, #67FEBD);
+      box-shadow: 0 3px 5px #dc4ce8;
+    }
+
+    .level-btn.active {
+      background: linear-gradient(45deg, #00FFFF, #830cde);
+      box-shadow: 0 0 10px #00FFFF;
+    }
+
+    .download-btn {
+      position: static !important;
+      transform: none !important;
+      left: auto !important;
+      display: inline-block;
+      background: linear-gradient(45deg, #c71585, #ff69b4);
+      color: #FFFFFF;
+      border: 2px solid #FFFFFF;
+      padding: 0.5rem 1rem;
+      border-radius: 25px;
+      font-family: 'GothNerd';
+      font-weight: bold;
+      font-size: 0.85rem;
+      cursor: pointer;
+      margin: 0.3rem;
+      box-shadow: 0 0 15px #c71585;
+    }
+
+    .download-btn:hover {
+      background: linear-gradient(45deg, #ff69b4, #67FEBD);
+      box-shadow: 0 3px 15px #ff69b4;
+    }
+
+    #level-buttons {
+      text-align: center;
+      margin-bottom: 0;
+    }
+
+
+
+
+/* ============================ RAINBOW BACK TO TOP ============================ */
+#scroll-top {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 1000;
+  cursor: pointer;
+  width: 35px;
+  height: 45px;
+  border-radius: 50%;
+}
+
+#scroll-top .button-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#scroll-top img {
+  width: 50px;
+  height: 60px;
+  transition: transform 0.3s ease;
+  animation: hue-shift-slow 8s linear infinite;
+}
+
+#scroll-top:hover img {
+  transform: scale(1.1);
+  animation: hue-shift-fast 3s linear infinite;
+}
+
+@keyframes hue-shift-slow {
+  0%   { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+@keyframes hue-shift-fast {
+  0%   { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+#scroll-top .arrow-overlay {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3.5rem;
+  font-family: 'GothNerd';
+  color: rgb(0,0,0); 
+  pointer-events: none; 
+  user-select: none;
+  z-index: 1001;
+}
+
+
+/* ============================ TIP JAR ============================ */
+        #kofi-float {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            z-index: 1000;
+            cursor: pointer;
+        }
+
+        #kofi-float img {
+            width: 55px; 
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+/* ============================ ALERT MODAL ============================ */
+#alert-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#alert-box {
+  background: #11021bd3;
+  border: 2px solid #c71585;
+  box-shadow: 0 0 50px #c71585;
+  border-radius: 25px;
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 20px 24px;
+  min-width: 300px;
+  max-width: 600px;
+  max-height: 90%;
+}
+
+h4 {
+  font-size: 1.5rem;
+  text-align: center;
+  color: #ff0059;
+  margin-top: 0;
+}
+
+
+
+#alert-box button {
+  margin-top: 12px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+        #kofi-float:hover img {
+            transform: scale(1.1); 
+        }
+
+        
+        .hearts {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            pointer-events: none; 
+            overflow: hidden;
+  
+        }
+
+       
+        .heart {
+            position: absolute;
+            bottom: 50px;
+            left: 30px;
+            font-size: 16px;
+            animation: float-up 3s infinite ease-in;
+            opacity: 0;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-120px) translateX(var(--drift)) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
+        
+        #kofi-float .hearts .heart {
+            display: none;
+        }
+
+        
+        #kofi-float:hover .hearts .heart {
+            display: block;
+            animation-delay: var(--delay);
+        }
+  
+
+/* ============================ NIELS ============================ */
+.Niels-container {
+    margin-top: 50px;
+    position: relative;
+    text-align: center;
+    justify-content: center;
+}
+
+
+.Niels-container img {
+    max-width: 220px; 
+    height: auto;
+}
+
+/* ============================ MOBILE ============================ */
+
+@media (max-width: 930px) {
+
+.Niels-container {
+    margin-top: 20px;
+}
+
+
+.Niels-container img {
+    max-width: 150px; 
+    height: auto;
+}
+
+   h1 {
+        font-size: 1.4rem;
+    }
+
+    h3 {
+        font-size: 0.9rem;
+        text-align: center;
+        color: #FFFFFF;
+    }
+
+    h2 {
+        font-size: 1rem;
+        color: #67FEBD;
+    }    
+
+    .card {
+      padding: 1rem;
+      margin-bottom: 2rem;
+      max-width: 85%;
+    }
+
+
+
+
+
+    button {
+      padding: 0.7rem 2rem;
+      font-size: 1rem;
+    }
+
+    #jsonFile {
+      padding: 0.6rem 1.5rem;
+      font-size: 0.7rem;
+    }
+
+    #jsonFile::file-selector-button {
+      padding: 0.4rem 0.5rem;
+      font-size: 0.7rem;
+      margin-right: 0.3rem;
+    }
+
+    .level-btn {
+      padding: 0.4rem 1rem;
+      font-size: 0.8rem;
+      margin: 0.2rem;
+    }
+
+    .download-btn {
+      padding: 0.4rem 0.8rem;
+      font-size: 0.75rem;
+      margin: 0.2rem;
+    }
+
+    .results-card {
+      padding: 1rem;
+      max-width: 90%;
+    }
+    .results-card {
+      padding: 1rem;
+      max-width: 90%;
+    }
+
+#scroll-top {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
+
+#scroll-top img {
+  width: 35px;
+  height: 45px;
+}
+
+#kofi-float {
+            bottom: 10px;
+            left: 10px;
+        }
+
+#kofi-float img {
+            width: 50px; 
+        }
+
+.hearts {
+    display: none;
+}
+.heart {
+    display: none;
+}
+
+}
+
+  </style>
+</head>
+
+<body>
+
+<div class="background-gradient"></div>
+
+<div class="Niels-container"><img class="Niels" src="Niels.png" alt="Niels"></div>
+
+<h1>JSON MAKEOVER</h1>
+<h3>THIS RE-FORMATTING TOOL IS AN ACCESSORY TO THE <a href="https://mkb0020.itch.io/platform-calculator" target="_blank" rel="noopener noreferrer"> NEUROTIC LEVEL DESIGN CALCULATOR</a></h3>
+
+<div class="card">
+  <h2>UPLOAD JSON HERE</h2>
+  <input type="file" id="jsonFile" accept=".json" style="display: block; margin: 1rem auto; color: #fff; font-family: 'GothNerd';">
+</div>
+
+
+<button onclick="processJSON()">CONVERT</button>
+
+
+<div id="results-container" style="display: none;">
+  <div class="card" id="results-card">
+    <h2>CONVERTED LEVELS</h2>
+    <div id="level-buttons"></div>
+    <div id="preview-area" style="margin-top: 0; background: #23014773; padding: 1rem; border: 2px dashed #5702b175; border-top: none; max-height: 350px; overflow-y: auto;">
+      <pre id="preview-content" style="color: #67FEBD; font-size: 0.9rem; margin: 0;"></pre>
+    </div>
+    <button id="downloadAllBtn" onclick="downloadAllLevels()" style="display: block; margin-top: 1.5rem;">DOWNLOAD ALL LEVELS</button>
+  </div>
+</div>
+<div id="kofi-float">
+        <a href="https://ko-fi.com/mkb0020" target="_blank" rel="noopener noreferrer">
+            <img src="tipjar.png" alt="Support me on Ko-fi">
+            <div class="hearts">
+                <div class="heart" style="--delay: 0s; --drift: -20px;">❤️</div>
+                <div class="heart" style="--delay: 0.5s; --drift: 15px;">💖</div>
+                <div class="heart" style="--delay: 1s; --drift: -10px;">💕</div>
+                <div class="heart" style="--delay: 1.5s; --drift: 20px;">❤️</div>
+                <div class="heart" style="--delay: 2s; --drift: -15px;">💗</div>
+                <div class="heart" style="--delay: 2.5s; --drift: 10px;">💖</div>
+            </div>
+        </a>
+</div>
+
+<div id="alert-overlay" class="hidden">
+  <div id="alert-box">
+    <h4 id="alert-message">PLEASE SELECT A FILE</h4>
+    <button id="alert-ok" type="button">OK</button>
+  </div>
+</div>
+
+<div id="scroll-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+          <a href="javascript:void(0);" class="button-container" aria-label="Scroll to top">
+              <img src="top.png" alt="Scroll to top">
+          </a>
+</div>
+
+<script>
+
+let convertedLevels = [];
+let inputData = null;
+
+document.addEventListener("DOMContentLoaded", () => {
+  const overlay = document.getElementById("alert-overlay");
+  const okBtn = document.getElementById("alert-ok");
+
+  okBtn.addEventListener("click", () => {
+    overlay.classList.add("hidden");
+  });
+});
+
+function showAlert(message) { 
+  const overlay = document.getElementById("alert-overlay");
+  const msgElement = document.getElementById("alert-message");
+  msgElement.textContent = message;
+  overlay.classList.remove("hidden");
+}
+
+function processJSON() {
+  const fileInput = document.getElementById('jsonFile');
+  
+  if (!fileInput.files.length) {
+    showAlert('PLEASE UPLOAD A FILE');
+    return;
+  }
+
+  const file = fileInput.files[0];
+  const reader = new FileReader();
+  
+  reader.onload = function(e) {
+    try {
+      inputData = JSON.parse(e.target.result);
+      convertLevels(inputData);
+    } catch (error) {
+      showAlert('ERROR PARSING JSON: ' + error.message);
+    }
+  };
+  
+  reader.readAsText(file);
+}
+
+function convertLevels(data) {
+  convertedLevels = [];
+  
+  if (!data.levels || !Array.isArray(data.levels)) {
+    showAlert('INVALID JSON FORMAT: No levels array found');
+    return;
+  }
+  
+  data.levels.forEach(level => {
+    const converted = convertLevel(level);
+    convertedLevels.push({
+      levelNumber: level.level,
+      data: converted
+    });
+  });
+  
+  displayResults();
+}
+
+function convertLevel(level) {
+  const result = {
+    GroundSegments: [],
+    platforms: []
+  };
+  
+  if (level.gauntlets && Array.isArray(level.gauntlets)) {
+    level.gauntlets.forEach(gauntlet => {
+      if (gauntlet.nextGroundSegmentStartX !== undefined) {
+        result.GroundSegments.push({
+          x: parseFloat(gauntlet.nextGroundSegmentStartX),
+          y: 440,
+          width: level.groundSegmentLength || 1500,
+          height: 50
+        });
+      }
+    });
+  }
+  
+  if (level.gauntlets && Array.isArray(level.gauntlets)) {
+    level.gauntlets.forEach(gauntlet => {
+      if (gauntlet.platforms && Array.isArray(gauntlet.platforms)) {
+        gauntlet.platforms.forEach(platform => {
+          result.platforms.push({
+            x: parseFloat(platform.startX),
+            y: parseFloat(platform.y),
+            w: level.platformWidth,
+            h: 20
+          });
+        });
+      }
+    });
+  }
+  
+  return result;
+}
+
+function displayResults() {
+  const container = document.getElementById('results-container');
+  const buttonsDiv = document.getElementById('level-buttons');
+  const previewContent = document.getElementById('preview-content');
+  
+  container.style.display = 'block';
+  buttonsDiv.innerHTML = '';
+  
+  convertedLevels.forEach((level, index) => {
+    const btn = document.createElement('button');
+    btn.className = 'level-btn';
+    btn.textContent = `LEVEL ${level.levelNumber}`;
+    btn.onclick = () => {
+      document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      previewContent.textContent = JSON.stringify(level.data, null, 2);
+    };
+    buttonsDiv.appendChild(btn);
+  });
+  
+  if (convertedLevels.length > 0) {
+    previewContent.textContent = JSON.stringify(convertedLevels[0].data, null, 2);
+    buttonsDiv.firstChild.classList.add('active');
+  }
+}
+
+function downloadLevel(level) {
+  const jsonString = JSON.stringify(level.data, null, 2);
+  const blob = new Blob([jsonString], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `exampleOutput_Level${level.levelNumber}.json`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function downloadAllLevels() {
+  convertedLevels.forEach(level => {
+    setTimeout(() => downloadLevel(level), 100 * convertedLevels.indexOf(level));
+  });
+}
+</script>
+
+</body>
+</html>

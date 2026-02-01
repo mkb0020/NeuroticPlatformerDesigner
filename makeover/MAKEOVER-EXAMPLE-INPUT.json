@@ -1,0 +1,434 @@
+{
+  "jumpForce": 780,
+  "effectiveSpeed": 500,
+  "maxJumpDistance": "520.00",
+  "maxJumpHeight": "202.80",
+  "levels": [
+    {
+      "level": 1,
+      "gauntletsPerLevel": 5,
+      "platformsPerGauntlet": 5,
+      "platformWidth": 250,
+      "firstGroundEnd": 1500,
+      "groundSegmentLength": 1500,
+      "overlap": 100,
+      "platformGap": "500.00",
+      "platformStartToStart": "750.00",
+      "gauntlets": [
+        {
+          "gauntletNumber": 1,
+          "gauntletStartX": "1400.00",
+          "gauntletEndX": "4650.00",
+          "gauntletLength": "3250.00",
+          "platforms": [
+            {
+              "platformNumber": 1,
+              "startX": "1400.00",
+              "endX": "1650.00",
+              "y": "436.0"
+            },
+            {
+              "platformNumber": 2,
+              "startX": "2150.00",
+              "endX": "2400.00",
+              "y": "401.0"
+            },
+            {
+              "platformNumber": 3,
+              "startX": "2900.00",
+              "endX": "3150.00",
+              "y": "253.8"
+            },
+            {
+              "platformNumber": 4,
+              "startX": "3650.00",
+              "endX": "3900.00",
+              "y": "209.3"
+            },
+            {
+              "platformNumber": 5,
+              "startX": "4400.00",
+              "endX": "4650.00",
+              "y": "345.6"
+            }
+          ],
+          "nextGroundSegmentStartX": "4550.00",
+          "nextGroundSegmentEndX": "6050.00"
+        },
+        {
+          "gauntletNumber": 2,
+          "gauntletStartX": "5950.00",
+          "gauntletEndX": "9200.00",
+          "gauntletLength": "3250.00",
+          "platforms": [
+            {
+              "platformNumber": 1,
+              "startX": "5950.00",
+              "endX": "6200.00",
+              "y": "346.1"
+            },
+            {
+              "platformNumber": 2,
+              "startX": "6700.00",
+              "endX": "6950.00",
+              "y": "263.5"
+            },
+            {
+              "platformNumber": 3,
+              "startX": "7450.00",
+              "endX": "7700.00",
+              "y": "357.4"
+            },
+            {
+              "platformNumber": 4,
+              "startX": "8200.00",
+              "endX": "8450.00",
+              "y": "384.5"
+            },
+            {
+              "platformNumber": 5,
+              "startX": "8950.00",
+              "endX": "9200.00",
+              "y": "410.1"
+            }
+          ],
+          "nextGroundSegmentStartX": "9100.00",
+          "nextGroundSegmentEndX": "10600.00"
+        },
+        {
+          "gauntletNumber": 3,
+          "gauntletStartX": "10500.00",
+          "gauntletEndX": "13750.00",
+          "gauntletLength": "3250.00",
+          "platforms": [
+            {
+              "platformNumber": 1,
+              "startX": "10500.00",
+              "endX": "10750.00",
+              "y": "304.5"
+            },
+            {
+              "platformNumber": 2,
+              "startX": "11250.00",
+              "endX": "11500.00",
+              "y": "198.0"
+            },
+            {
+              "platformNumber": 3,
+              "startX": "12000.00",
+              "endX": "12250.00",
+              "y": "53.4"
+            },
+            {
+              "platformNumber": 4,
+              "startX": "12750.00",
+              "endX": "13000.00",
+              "y": "193.3"
+            },
+            {
+              "platformNumber": 5,
+              "startX": "13500.00",
+              "endX": "13750.00",
+              "y": "35.0"
+            }
+          ],
+          "nextGroundSegmentStartX": "13650.00",
+          "nextGroundSegmentEndX": "15150.00"
+        },
+        {
+          "gauntletNumber": 4,
+          "gauntletStartX": "15050.00",
+          "gauntletEndX": "18300.00",
+          "gauntletLength": "3250.00",
+          "platforms": [
+            {
+              "platformNumber": 1,
+              "startX": "15050.00",
+              "endX": "15300.00",
+              "y": "377.8"
+            },
+            {
+              "platformNumber": 2,
+              "startX": "15800.00",
+              "endX": "16050.00",
+              "y": "439.3"
+            },
+            {
+              "platformNumber": 3,
+              "startX": "16550.00",
+              "endX": "16800.00",
+              "y": "413.3"
+            },
+            {
+              "platformNumber": 4,
+              "startX": "17300.00",
+              "endX": "17550.00",
+              "y": "327.6"
+            },
+            {
+              "platformNumber": 5,
+              "startX": "18050.00",
+              "endX": "18300.00",
+              "y": "348.2"
+            }
+          ],
+          "nextGroundSegmentStartX": "18200.00",
+          "nextGroundSegmentEndX": "19700.00"
+        },
+        {
+          "gauntletNumber": 5,
+          "gauntletStartX": "19600.00",
+          "gauntletEndX": "22850.00",
+          "gauntletLength": "3250.00",
+          "platforms": [
+            {
+              "platformNumber": 1,
+              "startX": "19600.00",
+              "endX": "19850.00",
+              "y": "422.7"
+            },
+            {
+              "platformNumber": 2,
+              "startX": "20350.00",
+              "endX": "20600.00",
+              "y": "285.3"
+            },
+            {
+              "platformNumber": 3,
+              "startX": "21100.00",
+              "endX": "21350.00",
+              "y": "203.7"
+            },
+            {
+              "platformNumber": 4,
+              "startX": "21850.00",
+              "endX": "22100.00",
+              "y": "28.2"
+            },
+            {
+              "platformNumber": 5,
+              "startX": "22600.00",
+              "endX": "22850.00",
+              "y": "107.2"
+            }
+          ],
+          "nextGroundSegmentStartX": "22750.00",
+          "nextGroundSegmentEndX": "24250.00"
+        }
+      ]
+    },
+    {
+      "level": 2,
+      "gauntletsPerLevel": 5,
+      "platformsPerGauntlet": 5,
+      "platformWidth": 225,
+      "firstGroundEnd": 1500,
+      "groundSegmentLength": 1500,
+      "overlap": -50,
+      "platformGap": "510.00",
+      "platformStartToStart": "735.00",
+      "gauntlets": [
+        {
+          "gauntletNumber": 1,
+          "gauntletStartX": "1550.00",
+          "gauntletEndX": "4715.00",
+          "gauntletLength": "3165.00",
+          "platforms": [
+            {
+              "platformNumber": 1,
+              "startX": "1550.00",
+              "endX": "1775.00",
+              "y": "337.7"
+            },
+            {
+              "platformNumber": 2,
+              "startX": "2285.00",
+              "endX": "2510.00",
+              "y": "357.3"
+            },
+            {
+              "platformNumber": 3,
+              "startX": "3020.00",
+              "endX": "3245.00",
+              "y": "207.3"
+            },
+            {
+              "platformNumber": 4,
+              "startX": "3755.00",
+              "endX": "3980.00",
+              "y": "119.9"
+            },
+            {
+              "platformNumber": 5,
+              "startX": "4490.00",
+              "endX": "4715.00",
+              "y": "136.5"
+            }
+          ],
+          "nextGroundSegmentStartX": "4765.00",
+          "nextGroundSegmentEndX": "6265.00"
+        },
+        {
+          "gauntletNumber": 2,
+          "gauntletStartX": "6315.00",
+          "gauntletEndX": "9480.00",
+          "gauntletLength": "3165.00",
+          "platforms": [
+            {
+              "platformNumber": 1,
+              "startX": "6315.00",
+              "endX": "6540.00",
+              "y": "387.5"
+            },
+            {
+              "platformNumber": 2,
+              "startX": "7050.00",
+              "endX": "7275.00",
+              "y": "384.3"
+            },
+            {
+              "platformNumber": 3,
+              "startX": "7785.00",
+              "endX": "8010.00",
+              "y": "281.0"
+            },
+            {
+              "platformNumber": 4,
+              "startX": "8520.00",
+              "endX": "8745.00",
+              "y": "340.8"
+            },
+            {
+              "platformNumber": 5,
+              "startX": "9255.00",
+              "endX": "9480.00",
+              "y": "260.4"
+            }
+          ],
+          "nextGroundSegmentStartX": "9530.00",
+          "nextGroundSegmentEndX": "11030.00"
+        },
+        {
+          "gauntletNumber": 3,
+          "gauntletStartX": "11080.00",
+          "gauntletEndX": "14245.00",
+          "gauntletLength": "3165.00",
+          "platforms": [
+            {
+              "platformNumber": 1,
+              "startX": "11080.00",
+              "endX": "11305.00",
+              "y": "361.7"
+            },
+            {
+              "platformNumber": 2,
+              "startX": "11815.00",
+              "endX": "12040.00",
+              "y": "200.1"
+            },
+            {
+              "platformNumber": 3,
+              "startX": "12550.00",
+              "endX": "12775.00",
+              "y": "253.1"
+            },
+            {
+              "platformNumber": 4,
+              "startX": "13285.00",
+              "endX": "13510.00",
+              "y": "124.7"
+            },
+            {
+              "platformNumber": 5,
+              "startX": "14020.00",
+              "endX": "14245.00",
+              "y": "20.0"
+            }
+          ],
+          "nextGroundSegmentStartX": "14295.00",
+          "nextGroundSegmentEndX": "15795.00"
+        },
+        {
+          "gauntletNumber": 4,
+          "gauntletStartX": "15845.00",
+          "gauntletEndX": "19010.00",
+          "gauntletLength": "3165.00",
+          "platforms": [
+            {
+              "platformNumber": 1,
+              "startX": "15845.00",
+              "endX": "16070.00",
+              "y": "336.1"
+            },
+            {
+              "platformNumber": 2,
+              "startX": "16580.00",
+              "endX": "16805.00",
+              "y": "340.6"
+            },
+            {
+              "platformNumber": 3,
+              "startX": "17315.00",
+              "endX": "17540.00",
+              "y": "180.5"
+            },
+            {
+              "platformNumber": 4,
+              "startX": "18050.00",
+              "endX": "18275.00",
+              "y": "343.5"
+            },
+            {
+              "platformNumber": 5,
+              "startX": "18785.00",
+              "endX": "19010.00",
+              "y": "416.7"
+            }
+          ],
+          "nextGroundSegmentStartX": "19060.00",
+          "nextGroundSegmentEndX": "20560.00"
+        },
+        {
+          "gauntletNumber": 5,
+          "gauntletStartX": "20610.00",
+          "gauntletEndX": "23775.00",
+          "gauntletLength": "3165.00",
+          "platforms": [
+            {
+              "platformNumber": 1,
+              "startX": "20610.00",
+              "endX": "20835.00",
+              "y": "432.9"
+            },
+            {
+              "platformNumber": 2,
+              "startX": "21345.00",
+              "endX": "21570.00",
+              "y": "320.7"
+            },
+            {
+              "platformNumber": 3,
+              "startX": "22080.00",
+              "endX": "22305.00",
+              "y": "227.6"
+            },
+            {
+              "platformNumber": 4,
+              "startX": "22815.00",
+              "endX": "23040.00",
+              "y": "398.9"
+            },
+            {
+              "platformNumber": 5,
+              "startX": "23550.00",
+              "endX": "23775.00",
+              "y": "379.3"
+            }
+          ],
+          "nextGroundSegmentStartX": "23825.00",
+          "nextGroundSegmentEndX": "25325.00"
+        }
+      ]
+    }
+  ]
+}
