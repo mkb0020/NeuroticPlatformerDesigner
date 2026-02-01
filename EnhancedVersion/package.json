@@ -1,0 +1,26 @@
+{
+  "name": "neurotic-level-design-calculator",
+  "version": "1.0.0",
+  "description": "Generate Evenly Spaced Platform Locations/Distances for Side Scrolling Platformer Video Games",
+  "main": "index.html",
+  "scripts": {
+    "tauri": "tauri",
+    "dev": "tauri dev",
+    "build": "tauri build",
+    "build:debug": "tauri build --debug"
+  },
+  "keywords": [
+    "platformer",
+    "game-design",
+    "calculator",
+    "tauri"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@tauri-apps/cli": "^2.0.0"
+  },
+  "dependencies": {
+    "@tauri-apps/api": "^2.9.1"
+  }
+}
