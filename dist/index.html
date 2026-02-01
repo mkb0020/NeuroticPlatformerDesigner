@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Platform Calculator</title>
+  <style>
+
+html {
+  min-height: 100%;         
+  overflow-y: scroll;        
+}
+
+    body {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #000000;
+      color: #FFFFFF;
+      font-family: 'GothNerd';
+      padding: 10px;
+    }
+
+html::-webkit-scrollbar {
+  width: 15px;
+  height: 12px;
+}
+
+html::-webkit-scrollbar-track {
+  background: #0a0015;
+  border-left: 2px solid #5702b1c2;
+  box-shadow: inset 0 0 12px #000000cc;
+}
+
+html::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    145deg,
+    #ff69b4 0%,
+    #c71585 5%,
+    #dc4ce8 10%,
+    #830cde 15%,
+    #00ffff 20%,
+    #67FEBD 25%
+  );
+  border-radius: 8px;          
+  background-size: 300% 300%;    
+  filter: hue-rotate(0deg);
+  animation: 
+    hueCycle 18s linear infinite,    
+    neonFlow 8s ease-in-out infinite alternate; 
+}
+
+html::-webkit-scrollbar-thumb:hover {
+  animation-duration: 12s, 4s;     
+  filter: brightness(1.2) saturate(1.5);   
+}
+
+@keyframes hueCycle {
+  0%   { filter: hue-rotate(0deg) brightness(1.1) saturate(1.3); }
+  25%  { filter: hue-rotate(90deg) brightness(1.3) saturate(1.6); }
+  50%  { filter: hue-rotate(180deg) brightness(1.4) saturate(1.8); }
+  75%  { filter: hue-rotate(270deg) brightness(1.2) saturate(1.5); }
+  100% { filter: hue-rotate(360deg) brightness(1.1) saturate(1.3); }
+}
+
+@keyframes neonFlow {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 300% 50%; }
+}
+
+
+
+    @font-face {
+    font-family: 'GothNerd'; 
+    src: url('GothNerd.ttf') format('truetype'); 
+    }
+
+    .background-gradient {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(to bottom, #37025A 40%, #8a2be2 60%, #c71585 85%, #c71585  97%, #ff69b4 100%);
+      opacity: 0.85;
+      z-index: -2;
+    }
+
+    h1 {
+        font-size: 2.7rem;
+        text-align: center;
+          background: linear-gradient(45deg, #FFC7FF, #ff69b4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
+
+    h3 {
+        position: relative;
+        font-size: 1.4rem;
+        text-align: center;
+        color: #FFFFFF;
+        max-width: 900px;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+
+    h2 {
+        font-size: 1.5rem;
+        color: #67FEBD;
+    }    
+
+    .card {
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #11021bd3;
+      border: 2px solid linear-gradient(45deg, #830cde, #dc4ce8);
+      box-shadow: 0 0 15px #00FFFF;
+      border-radius: 25px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(20px);
+      max-width: 800px;
+
+    }
+    
+    .message {
+      position: relative;
+      color: #FFC7FF;
+      font-size: 1.1rem;
+    }
+
+    label {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+      gap: 1rem;
+      font-size: 1rem;
+      margin-left: 1.2rem;
+      color: #ffffff;
+    }
+
+
+
+    input {
+      width: 150px;
+      background: #2b034a5a;
+      color: #FFFFFF;
+      border: 2px solid #9090c0b1;
+      border-radius: 6px;
+      padding: 0.3rem;
+      font-family: 'GothNerd';
+      font-size: 0.9rem;
+    }
+
+    input[type="number"]:focus,
+    select:focus,
+    textarea:focus {
+    outline: none;
+    border-color: #00FFFF;
+    box-shadow: 0 0 15px #00FFFF;
+}
+
+    button {
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(45deg, #830cde, #dc4ce8);
+      color: #FFFFFF;
+      border: 2px solid #FFFFFF;
+      padding: 0.5rem 3rem;
+      border-radius: 35px;
+      font-family: 'GothNerd';
+      font-weight: bold;
+      font-size: 1.2rem;
+      cursor: pointer;
+      margin-top: 1rem;
+      margin-bottom: 2rem;
+      box-shadow: 0 0 30px #830cde;
+    }
+
+
+    button:hover {
+        background: linear-gradient(45deg, #dc4ce8, #67FEBD);
+        box-shadow: 0 5px 20px #dc4ce8;
+}
+
+
+
+    .results-card {
+      position: relative;
+      left: 50%;
+      transform: translateX(-50%);  
+      background: #11021bd3;
+      border: 2px solid linear-gradient(45deg, #830cde, #dc4ce8);
+      box-shadow: 0 0 15px #00FFFF;
+      border-radius: 25px;
+      padding: 2rem;
+      margin-bottom: 2rem;
+      backdrop-filter: blur(20px);
+      max-width: 1050px;
+
+    }
+
+    pre {
+      background: #31065260;
+      color: #67FEBD;
+      font-size: 1rem;
+      border: 3px solid transparent;
+      border-image: linear-gradient(45deg, #00FFFF, #dc4ce8) 1;
+      border-radius: 10px;
+      padding: 1rem;
+      overflow-x: auto;
+      margin-top: 2rem;
+    }
+
+
+/* ============================ RAINBOW BACK TO TOP ============================ */
+#scroll-top {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  z-index: 1000;
+  cursor: pointer;
+  width: 35px;
+  height: 45px;
+  border-radius: 50%;
+}
+
+#scroll-top .button-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+#scroll-top img {
+  width: 50px;
+  height: 60px;
+  transition: transform 0.3s ease;
+  animation: hue-shift-slow 8s linear infinite;
+}
+
+#scroll-top:hover img {
+  transform: scale(1.1);
+  animation: hue-shift-fast 3s linear infinite;
+}
+
+@keyframes hue-shift-slow {
+  0%   { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+@keyframes hue-shift-fast {
+  0%   { filter: hue-rotate(0deg); }
+  100% { filter: hue-rotate(360deg); }
+}
+
+#scroll-top .arrow-overlay {
+  position: absolute;
+  top: 80%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 3.5rem;
+  font-family: 'GothNerd';
+  color: rgb(0,0,0); 
+  pointer-events: none; 
+  user-select: none;
+  z-index: 1001;
+}
+
+
+/* ============================ TIP JAR ============================ */
+        #kofi-float {
+            position: fixed;
+            bottom: 10px;
+            left: 10px;
+            z-index: 1000;
+            cursor: pointer;
+        }
+
+        #kofi-float img {
+            width: 55px; 
+            height: auto;
+            transition: transform 0.3s ease;
+        }
+
+/* ============================ ALERT MODAL ============================ */
+#alert-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+}
+
+#alert-box {
+  background: #11021bd3;
+  border: 2px solid #c71585;
+  box-shadow: 0 0 50px #c71585;
+  border-radius: 25px;
+  color: #fff;
+  font-size: 1.2rem;
+  padding: 20px 24px;
+  min-width: 300px;
+  max-width: 600px;
+  max-height: 90%;
+}
+
+h4 {
+  font-size: 1.5rem;
+  text-align: center;
+  color: #ff0059;
+  margin-top: 0;
+}
+
+#alert-box button {
+  margin-top: 12px;
+}
+
+.hidden {
+  display: none !important;
+}
+
+        #kofi-float:hover img {
+            transform: scale(1.1); 
+        }
+
+        
+        .hearts {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 150px;
+            pointer-events: none; 
+            overflow: hidden;
+  
+        }
+
+       
+        .heart {
+            position: absolute;
+            bottom: 50px;
+            left: 30px;
+            font-size: 16px;
+            animation: float-up 3s infinite ease-in;
+            opacity: 0;
+        }
+
+        @keyframes float-up {
+            0% {
+                transform: translateY(0) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-120px) translateX(var(--drift)) rotate(45deg);
+                opacity: 0;
+            }
+        }
+
+        
+        #kofi-float .hearts .heart {
+            display: none;
+        }
+
+        
+        #kofi-float:hover .hearts .heart {
+            display: block;
+            animation-delay: var(--delay);
+        }
+  
+
+/* ============================ NIELS ============================ */
+.Niels-container {
+    margin-top: 50px;
+    position: relative;
+    text-align: center;
+    justify-content: center;
+}
+
+
+.Niels-container img {
+    max-width: 175px; 
+    height: auto;
+}
+
+/* ============================ Mobile ============================ */
+
+@media (max-width: 930px) {
+    .message {
+      font-size: 0.8rem;
+    }
+
+.Niels-container {
+    margin-top: 20px;
+}
+
+
+.Niels-container img {
+    max-width: 150px; 
+    height: auto;
+}
+
+   h1 {
+        font-size: 1.4rem;
+    }
+
+    h3 {
+        font-size: 0.8rem;
+        text-align: center;
+        color: #FFFFFF;
+    }
+
+    h2 {
+        font-size: 1rem;
+        color: #67FEBD;
+    }    
+
+    .card {
+      padding: 1rem;
+      margin-bottom: 2rem;
+      max-width: 85%;
+    }
+
+    label {
+      margin-bottom: 0.5rem;
+      gap: 1.3rem;
+      font-size: 0.8rem;
+      margin-left: 0.5rem;
+ 
+    }
+
+    input {
+      width: 60px;
+      padding: 0.3rem;
+      font-size: 0.7rem;
+      gap: 1.5rem;
+    }
+
+
+    button {
+      padding: 0.7rem 2rem;
+      font-size: 1rem;
+    }
+
+    .results-card {
+      padding: 1rem;
+      max-width: 90%;
+    }
+
+#scroll-top {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+}
+
+#scroll-top img {
+  width: 35px;
+  height: 45px;
+}
+
+#kofi-float {
+            bottom: 10px;
+            left: 10px;
+        }
+
+#kofi-float img {
+            width: 50px; 
+        }
+
+.hearts {
+    display: none;
+}
+.heart {
+    display: none;
+}
+
+}
+
+  </style>
+</head>
+
+<body>
+
+<div class="background-gradient"></div>
+
+<div class="Niels-container"><img class="Niels" src="Niels.png" alt="Niels"></div>
+
+<h1>NEUROTIC LEVEL DESIGN CALCULATOR</h1>
+    <h3>GENERATE EVENLY SPACED PATFORM LOCATIONS/DISTANCES FOR SIDE-SCROLLING PLATFOMERS</h3>
+
+<div class="card">
+  <h2>PHYSICS</h2>
+  <label>GRAVITY (1 to 5000): <input id="gravity" type="number" value="1000" min="1" max="5000"></label>
+  <label>JUMP FORCE / UPWARDS VELOCITY (1 to 1000):<input id="jumpPower" type="number" value="100" min="1" max="1000"></label>
+  <label>JUMP FORCE MULTIPLIER(0.1 to 100): <input id="jumpMult" type="number" value="1" min="0.1" max="100" step="0.1"></label>
+  <label>BASE SPEED (1 to 1000):<input id="baseSpeed" type="number" value="100" min="1" max="1000"></label>
+  <label>SPEED MULTIPLIER (0.1 to 100):<input id="speedMult" type="number" value="1" min="0.1" max="100" step="0.1"></label>
+</div>
+
+
+<div class="card">
+  <h2>LEVEL SETUP</h2>
+    <label>NUMBER OF LEVELS (1 to 20): <input id="levels" type="number" value="1" min="1" max="20"></label>
+    <label>INCREMENTAL PLATFORM DISTANCE (-500 to 500): <input id="distanceDelta" type="number" value="0" min="-500" max="500"></label> <!-- INCREMENTAL DISTANCE FOR PROGRESSIVE LEVEL DIFFICULTY -->
+    <label>GROUND Y (100 to 2000): <input id="groundY" type="number" value="100" min="100" max="2000"></label>
+</div>
+
+<div id="levelsContainer"></div>
+
+
+<button onclick="calculate()">DO THE MATHS</button>
+
+
+<div class="results-card">
+<h2>RESULTS</h2>
+<button id="downloadBtn" onclick="downloadJSON()" style="display: none; margin-bottom: 1rem;">DOWNLOAD JSON</button>
+<pre id="output"></pre>
+</div>
+
+<div class="card">
+   <span class="message">Need a simplified json file? Check out <strong>JSON Makeover</strong> to reformat: https://mkb0020.itch.io/json-makeover</span>
+</div>
+
+<!--<a href="https://mkb0020.itch.io/json-makeover"><button>NEED A SIMPLIFIED JSON FILE? CLICK HERE TO REFORMAT</button></a>
+
+<div id="kofi-float">
+        <a href="https://ko-fi.com/mkb0020" target="_blank" rel="noopener noreferrer">
+            <img src="tipjar.png" alt="Support me on Ko-fi">
+            <div class="hearts">
+                <div class="heart" style="--delay: 0s; --drift: -20px;">❤️</div>
+                <div class="heart" style="--delay: 0.5s; --drift: 15px;">💖</div>
+                <div class="heart" style="--delay: 1s; --drift: -10px;">💕</div>
+                <div class="heart" style="--delay: 1.5s; --drift: 20px;">❤️</div>
+                <div class="heart" style="--delay: 2s; --drift: -15px;">💗</div>
+                <div class="heart" style="--delay: 2.5s; --drift: 10px;">💖</div>
+            </div>
+        </a>
+</div>-->
+
+<div id="alert-overlay" class="hidden">
+  <div id="alert-box">
+    <h4 id="alert-title">YOU ENTERED UNREALISTIC VALUES</h4>
+    <p id="alert-message"></p>
+    <button id="alert-ok" type="button">OK</button>
+  </div>
+</div>
+
+<div id="scroll-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'});">
+          <a href="javascript:void(0);" class="button-container" aria-label="Scroll to top">
+              <img src="top.png" alt="Scroll to top">
+          </a>
+</div>
+
+<script>
+
+/* =============================== ALERT MODAL SETUP ================================ */
+document.addEventListener("DOMContentLoaded", () => {
+  const overlay = document.getElementById("alert-overlay");
+  const okBtn = document.getElementById("alert-ok");
+
+  okBtn.addEventListener("click", () => {
+    overlay.classList.add("hidden");
+  });
+});
+
+const friendlyHeaders = [
+  "THAT WOULD BREAK THE LAWS OF THIS UNIVERSE",
+  "THAT VALUE MIGHT BE A BIT AMBITIOUS...",
+  "WE ADMIRE THE CONFIDENCE - BUT LET'S DIAL IT BACK.",
+  "WE LOVE THE ENTHUSIASM, BUT...",
+  "FUN IDEA! BUT..."
+];
+
+function showAlert(message) {
+  const overlay = document.getElementById("alert-overlay");
+  const msg = document.getElementById("alert-message");
+  const title = document.getElementById("alert-title");
+
+  title.textContent =
+    friendlyHeaders[Math.floor(Math.random() * friendlyHeaders.length)];
+  msg.textContent = message;
+
+  overlay.classList.remove("hidden");
+}
+
+function buildLevelCards() {
+  const container = document.getElementById('levelsContainer');
+  container.innerHTML = '';
+
+  const numLevels = +levels.value;
+
+  for (let i = 0; i < numLevels; i++) {
+    const card = document.createElement('div');
+    card.className = 'card';
+
+
+card.innerHTML = `
+    <h2>LEVEL ${i + 1} SPECS</h2>
+    <label>NUMBER OF GAUNTLETS (1 to 50): <input type="number" class="gauntlets" value="1" min="1" max="50"></label> 
+    <label>PLATFORMS PER GAUNTLET (1 to 100): <input type="number" class="platforms" value="1" min="1" max="100"></label> 
+    <label>PLATFORM WIDTH (10 to 1000): <input type="number" class="platformWidth" value="100" min="10" max="1000"></label>
+    <label>FIRST GROUND SEGMENT END (0 to 10000): <input type="number" class="firstGroundX" value="100" min="0" max="10000"></label> 
+    <label>GROUND LENGTH BETWEEN GAUNTLETS (10 to 5000): <input type="number" class="groundLength" value="100" min="10" max="5000"></label> 
+    <label>GROUND OVERLAP (-500 to 500): <input type="number" class="overlap" value="0" min="-500" max="500"></label> 
+    `;
+
+    container.appendChild(card);
+  }
+}
+
+
+window.addEventListener('load', buildLevelCards);
+
+document.addEventListener('DOMContentLoaded', function() {
+  const levelsInput = document.getElementById('levels');
+  levelsInput.addEventListener('input', buildLevelCards);
+});
+
+function calculate() {
+  // INPUT VALIDATION
+  const validations = {
+    gravity: { min: 1, max: 5000, name: 'Gravity' },
+    jumpPower: { min: 1, max: 1000, name: 'Jump Force' },
+    jumpMult: { min: 0.1, max: 100, name: 'Jump Multiplier' },
+    baseSpeed: { min: 1, max: 1000, name: 'Base Speed' },
+    speedMult: { min: 0.1, max: 100, name: 'Speed Multiplier' },
+    levels: { min: 1, max: 20, name: 'Number of Levels' },
+    distanceDelta: { min: -500, max: 500, name: 'Incremental Platform Distance' },
+    groundY: { min: 100, max: 2000, name: 'Ground Y' }
+  };
+
+  // VALIDATION
+  for (const [id, rules] of Object.entries(validations)) {
+    const input = document.getElementById(id);
+    const value = +input.value;
+    if (value < rules.min || value > rules.max) {
+      showAlert(`${rules.name} must be between ${rules.min} and ${rules.max}. You entered: ${value}`);
+      input.focus();
+      return;
+    }
+  }
+
+  // VALIDATION
+  const levelCards = document.querySelectorAll('#levelsContainer .card');
+  for (let l = 0; l < levelCards.length; l++) {
+    const card = levelCards[l];
+    const levelNum = l + 1;
+    
+    const levelValidations = {
+      gauntlets: { el: card.querySelector('.gauntlets'), min: 1, max: 50, name: `Level ${levelNum} - Number of Gauntlets` },
+      platforms: { el: card.querySelector('.platforms'), min: 1, max: 100, name: `Level ${levelNum} - Platforms per Gauntlet` },
+      platformWidth: { el: card.querySelector('.platformWidth'), min: 10, max: 1000, name: `Level ${levelNum} - Platform Width` },
+      firstGroundX: { el: card.querySelector('.firstGroundX'), min: 0, max: 10000, name: `Level ${levelNum} - First Ground Segment End` },
+      groundLength: { el: card.querySelector('.groundLength'), min: 10, max: 5000, name: `Level ${levelNum} - Ground Length Between Gauntlets` },
+      overlap: { el: card.querySelector('.overlap'), min: -500, max: 500, name: `Level ${levelNum} - Ground Overlap` }
+    };
+
+    for (const [key, rules] of Object.entries(levelValidations)) {
+      const value = +rules.el.value;
+      if (value < rules.min || value > rules.max) {
+        showAlert(`${rules.name} must be between ${rules.min} and ${rules.max}. You entered: ${value}`);
+        rules.el.focus();
+        return;
+      }
+    }
+  }
+
+  // PHYSICS
+  const g = +gravity.value;
+  const jp = +jumpPower.value;
+  const jm = +jumpMult.value;
+  const bs = +baseSpeed.value;
+  const sm = +speedMult.value;
+
+  // GLOBAL LEVEL SETUP
+  const numLevels = +levels.value;
+  const delta = +distanceDelta.value;
+  const gy = +groundY.value;
+
+  const jumpForce = jp * jm;
+  const effectiveSpeed = bs * sm;
+  const timeInAir = (2 * jumpForce) / g;
+  const maxJumpDistance = effectiveSpeed * timeInAir;
+  const maxJumpHeight = (jumpForce ** 2) / (2 * g);
+
+  const finalDistance = maxJumpDistance - delta;
+
+  let result = {
+    jumpForce,
+    effectiveSpeed,
+    maxJumpDistance: maxJumpDistance.toFixed(2),
+    maxJumpHeight: maxJumpHeight.toFixed(2),
+    levels: []
+  };
+
+  for (let l = 0; l < numLevels; l++) {
+    const card = levelCards[l];
+
+    // PER-LEVEL SPECS
+    const gauntletsPerLevel = +card.querySelector('.gauntlets').value;
+    const platformsPerGauntlet = +card.querySelector('.platforms').value;
+    const platformLen = +card.querySelector('.platformWidth').value;
+    const firstGroundEnd = +card.querySelector('.firstGroundX').value;
+    const groundLen = +card.querySelector('.groundLength').value;
+    const overlap = +card.querySelector('.overlap').value;
+
+    const fromEnd = (numLevels - 1) - l;
+    const platformGap = finalDistance - (fromEnd * delta);
+    const platformStartToStart = platformLen + platformGap;
+
+    // TRACK GROUND SEGMENTS AND GAUNTLETS
+    let currentGroundEndX = firstGroundEnd;
+    let gauntlets = [];
+
+    for (let g = 0; g < gauntletsPerLevel; g++) {
+      // GAUNTLET START 
+      const gauntletStartX = currentGroundEndX - overlap;
+
+      // CALCULATE PLATFORM POSITIONS
+      let platforms = [];
+      let prevY = gy;
+      let currentPlatformX = gauntletStartX; //PLATFORM 1 = LAST GROUND SEGMENT END - OVERLAP
+
+      for (let p = 0; p < platformsPerGauntlet; p++) {
+        // RANDOM Y POSITION 
+        const highestReachable = Math.max(0, prevY - maxJumpHeight * 0.9); // UPPER LIMIT
+        const lowestReachable = Math.min(gy, prevY + maxJumpHeight * 0.9); // LOWER LIMIT
+        
+        const y = Math.random() * (lowestReachable - highestReachable) + highestReachable;
+
+        platforms.push({
+          platformNumber: p + 1,
+          startX: currentPlatformX.toFixed(2),
+          endX: (currentPlatformX + platformLen).toFixed(2),
+          y: Math.max(0, y).toFixed(1) // NO NEGATIVE NUMBERS
+        });
+
+        prevY = y;
+        // NEXT PLATFORM START X = CURRENT PLATFORM START X + PLATFORM START GAP
+        currentPlatformX += platformStartToStart;
+      }
+
+      // GAUNTLET END X
+      const lastPlatformStartX = parseFloat(platforms[platforms.length - 1].startX);
+      const gauntletEndX = lastPlatformStartX + platformLen;
+
+      // GAUNTLET LENGTH
+      const gauntletLength = gauntletEndX - gauntletStartX;
+
+      // NEXT GROUND SEGMENT START = GAUNTLET END - OVERLAP
+      const nextGroundStartX = gauntletEndX - overlap;
+
+      // NEXT GROUND SEGMENT END = GROUND START X + GROUND LENGTH
+      const nextGroundEndX = nextGroundStartX + groundLen;
+
+      gauntlets.push({
+        gauntletNumber: g + 1,
+        gauntletStartX: gauntletStartX.toFixed(2),
+        gauntletEndX: gauntletEndX.toFixed(2),
+        gauntletLength: gauntletLength.toFixed(2),
+        platforms: platforms,
+        nextGroundSegmentStartX: nextGroundStartX.toFixed(2),
+        nextGroundSegmentEndX: nextGroundEndX.toFixed(2)
+      });
+
+      // UPDATE FOR NEXT ITERATION
+      currentGroundEndX = nextGroundEndX;
+    }
+
+    result.levels.push({
+      level: l + 1,
+      gauntletsPerLevel,
+      platformsPerGauntlet,
+      platformWidth: platformLen,
+      firstGroundEnd,
+      groundSegmentLength: groundLen,
+      overlap: overlap,
+      platformGap: platformGap.toFixed(2),
+      platformStartToStart: platformStartToStart.toFixed(2),
+      gauntlets: gauntlets
+    });
+  }
+
+  // FORMAT JSON WITH ALTERNATING COLORS
+  const jsonString = JSON.stringify(result, null, 2);
+  const lines = jsonString.split('\n');
+  let colored = '';
+  let currentLevel = -1;
+  const colors = ['#67FEBD', '#FFC7FF'];
+  const physicsColor = '#C4C3D0';
+  
+  for (let i = 0; i < lines.length; i++) {
+    const line = lines[i];
+    
+    // CHECK IF THIS LINE IS A PHYSICS PROPERTY
+    const isPhysicsProperty = line.includes('"jumpForce"') || 
+                              line.includes('"effectiveSpeed"') || 
+                              line.includes('"maxJumpDistance"') || 
+                              line.includes('"maxJumpHeight"');
+    
+    // CHECK IF THIS LINE STARTS A NEW LEVEL
+    if (line.includes('"level":')) {
+      const match = line.match(/"level":\s*(\d+)/);
+      if (match) {
+        currentLevel = parseInt(match[1]) - 1;
+      }
+    }
+    
+    // APPLY PHYSICS COLOR TO PHYSICS PROPERTIES
+    if (isPhysicsProperty) {
+      colored += `<span style="color: ${physicsColor}">${line}</span>\n`;
+    }
+    // APPLY COLOR BASED ON LEVEL
+    else if (currentLevel >= 0 && currentLevel < numLevels) {
+      const color = colors[currentLevel % 2];
+      colored += `<span style="color: ${color}">${line}</span>\n`;
+    } else {
+      colored += line + '\n';
+    }
+  }
+  
+  output.innerHTML = colored;
+  
+  // SHOW DOWNLOAD BUTTON AND STORE RESULT
+  document.getElementById('downloadBtn').style.display = 'block';
+  window.calculationResult = result;
+}
+
+function downloadJSON() {
+  if (!window.calculationResult) return;
+  
+  const jsonString = JSON.stringify(window.calculationResult, null, 2);
+  const blob = new Blob([jsonString], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'level-specs.json';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+</script>
+
+</body>
+</html>
