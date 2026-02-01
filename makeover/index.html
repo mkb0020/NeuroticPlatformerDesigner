@@ -583,6 +583,9 @@ h4 {
           </a>
 </div>
 
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
+
 <script>
 
 let convertedLevels = [];
@@ -722,10 +725,28 @@ function downloadLevel(level) {
   URL.revokeObjectURL(url);
 }
 
-function downloadAllLevels() {
+async function downloadAllLevels() {
+  const zip = new JSZip();
+  
   convertedLevels.forEach(level => {
-    setTimeout(() => downloadLevel(level), 100 * convertedLevels.indexOf(level));
+    const jsonString = JSON.stringify(level.data, null, 2);
+    zip.file(`reformatted-level${level.levelNumber}.json`, jsonString);
   });
+  
+  try {
+    const content = await zip.generateAsync({type: 'blob'});
+    
+    const url = URL.createObjectURL(content);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'all_levels.zip';
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  } catch (error) {
+    showAlert('ERROR CREATING ZIP: ' + error.message);
+  }
 }
 </script>
 
